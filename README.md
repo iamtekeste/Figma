@@ -1,9 +1,6 @@
 
 
 ---
-
-# @amzn/sdtechllm
-
 ## Interfaces
 
 - [ActiveUser](interfaces/ActiveUser.md)
