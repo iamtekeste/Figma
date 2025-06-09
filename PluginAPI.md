@@ -1,9 +1,3 @@
-[**@amzn/sdtechllm**](../README.md)
-
-***
-
-[@amzn/sdtechllm](../README.md) / PluginAPI
-
 # Interface: PluginAPI
 
 Defined in: figmaPluginTypes.ts:22
