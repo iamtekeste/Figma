@@ -1,3 +1,7 @@
+---
+
+PluginAPI
+
 # Interface: PluginAPI
 
 Defined in: figmaPluginTypes.ts:22
@@ -20,7 +24,7 @@ Note: This API is only available in FigJam.
 
 This property contains details about the active users in the file. `figma.activeUsers[0]` will match `figma.currentUser` for the `id`, `name`, `photoUrl`, `color`, and `sessionId` properties.
 
-***
+---
 
 ### annotations
 
@@ -30,7 +34,7 @@ Defined in: figmaPluginTypes.ts:448
 
 This property contains methods to work with annotations.
 
-***
+---
 
 ### apiVersion
 
@@ -40,7 +44,7 @@ Defined in: figmaPluginTypes.ts:26
 
 The version of the Figma API this plugin is running on, as defined in your `manifest.json` in the `"api"` field.
 
-***
+---
 
 ### clientStorage
 
@@ -52,7 +56,7 @@ This property contains methods to store persistent data on the user's local mach
 
 Read more in the [client storage section](https://www.figma.com/plugin-docs/api/figma-clientStorage).
 
-***
+---
 
 ### codegen
 
@@ -64,7 +68,7 @@ This property contains methods used to integrate with the Dev Mode codegen funct
 
 Read more in the [codegen section](https://www.figma.com/plugin-docs/api/figma-codegen).
 
-***
+---
 
 ### command
 
@@ -74,7 +78,7 @@ Defined in: figmaPluginTypes.ts:30
 
 The currently executing command from the `manifest.json` file. It is the command string in the `ManifestMenuItem` (more details in the [manifest guide](https://www.figma.com/plugin-docs/manifest)). If the plugin does not have any menu item, this property is undefined.
 
-***
+---
 
 ### constants
 
@@ -86,7 +90,7 @@ This property contains constants that can be accessed by the plugin API.
 
 Read more in the [constants section](https://www.figma.com/plugin-docs/api/figma-constants).
 
-***
+---
 
 ### currentPage
 
@@ -96,9 +100,9 @@ Defined in: figmaPluginTypes.ts:458
 
 The page that the user currently viewing. You can set this value to a [PageNode](PageNode.md) to switch pages.
 
-* If the manifest contains`"documentAccess": "dynamic-page"`, this property is read-only. Use [PluginAPI.setCurrentPageAsync](#setcurrentpageasync) to update the value.
+- If the manifest contains`"documentAccess": "dynamic-page"`, this property is read-only. Use [PluginAPI.setCurrentPageAsync](#setcurrentpageasync) to update the value.
 
-***
+---
 
 ### currentUser
 
@@ -110,7 +114,7 @@ Note: `currentuser` must be specified in the permissions array in `manifest.json
 
 This property contains details about the current user.
 
-***
+---
 
 ### devResources?
 
@@ -120,7 +124,7 @@ Defined in: figmaPluginTypes.ts:164
 
 Caution: This is a private API only available to [Figma partners](https://www.figma.com/partners/)
 
-***
+---
 
 ### editorType
 
@@ -130,7 +134,7 @@ Defined in: figmaPluginTypes.ts:34
 
 The current editor type this plugin is running in. See also [Setting editor type](https://www.figma.com/plugin-docs/setting-editor-type/).
 
-***
+---
 
 ### fileKey
 
@@ -142,7 +146,7 @@ The file key of the current file this plugin is running on.
 **Only [private plugins](https://help.figma.com/hc/en-us/articles/4404228629655-Create-private-organization-plugins) and Figma-owned resources (such as the Jira and Asana widgets) have access to this.**
 To enable this behavior, you need to specify `enablePrivatePluginApi` in your `manifest.json`.
 
-***
+---
 
 ### hasMissingFont
 
@@ -152,11 +156,11 @@ Defined in: figmaPluginTypes.ts:1566
 
 Returns true if the document contains text with missing fonts.
 
-***
+---
 
 ### mixed
 
-> `readonly` **mixed**: *typeof* [`mixed`](#mixed)
+> `readonly` **mixed**: _typeof_ [`mixed`](#mixed)
 
 Defined in: figmaPluginTypes.ts:877
 
@@ -167,18 +171,20 @@ This a constant value that some node properties return when they are a mix of mu
 Example:
 
 ```ts title="Check if property is a mix of multiple values"
-if (node.type === 'RECTANGLE') {
+if (node.type === "RECTANGLE") {
   if (node.cornerRadius !== figma.mixed) {
-    console.log(`Single corner radius: ${node.cornerRadius}`)
+    console.log(`Single corner radius: ${node.cornerRadius}`);
   } else {
-    console.log(`Mixed corner radius: ${node.topLeftRadius}, ${node.topRightRadius}, ${node.bottomLeftRadius}, ${node.bottomRightRadius}`)
+    console.log(
+      `Mixed corner radius: ${node.topLeftRadius}, ${node.topRightRadius}, ${node.bottomLeftRadius}, ${node.bottomRightRadius}`
+    );
   }
 }
 ```
 
 Note: Your plugin never needs to know what the actual value of `figma.mixed` is, only that it is a unique, constant value that can be compared against. That being said, this value returns an object of type `symbol` which is a more advanced feature of Javascript. [Read more about symbols](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Symbol). It works in TypeScript via the `unique symbol` [subtype](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-2-7.html#unique-symbol).
 
-***
+---
 
 ### mode
 
@@ -200,6 +206,7 @@ Caution: The `linkpreview` and `auth` modes are only available to partner and Fi
 #### Remarks
 
 Here’s a simplified example where you can create an if statement in a plugin that has one set of functionality when it is run in `Dev Mode`, and another set of functionality when run in Figma design:
+
 ```ts title="Code sample to determine editorType and mode"
 if (figma.editorType === "dev") {
   // Read the document and listen to API events
@@ -210,18 +217,18 @@ if (figma.editorType === "dev") {
   }
 } else if (figma.editorType === "figma") {
   // If the plugin is run in Figma design, edit the document
-  if (figma.mode === 'textreview') {
+  if (figma.mode === "textreview") {
     // Running in text review mode
   }
 } else if (figma.editorType === "figjam") {
   // Do FigJam only operations
-  if (figma.mode === 'textreview') {
+  if (figma.mode === "textreview") {
     // Running in text review mode
   }
 }
 ```
 
-***
+---
 
 ### parameters
 
@@ -231,7 +238,7 @@ Defined in: figmaPluginTypes.ts:416
 
 This property contains methods to handle user inputs when a plugin is launched in query mode. See [Accepting Parameters as Input](https://www.figma.com/plugin-docs/plugin-parameters) for more details.
 
-***
+---
 
 ### payments?
 
@@ -243,7 +250,7 @@ Note: `payments` must be specified in the permissions array in `manifest.json` t
 
 This property contains methods for plugins that require payment.
 
-***
+---
 
 ### pluginId?
 
@@ -253,7 +260,7 @@ Defined in: figmaPluginTypes.ts:74
 
 The value specified in the `manifest.json` "id" field. This only exists for Plugins.
 
-***
+---
 
 ### root
 
@@ -263,7 +270,7 @@ Defined in: figmaPluginTypes.ts:452
 
 The root of the entire Figma document. This node is used to access other pages. Each child is a [PageNode](PageNode.md).
 
-***
+---
 
 ### skipInvisibleInstanceChildren
 
@@ -299,7 +306,7 @@ The last two frame and text nodes cannot be accessed after setting `figma.skipIn
 The benefit of enabling this flag is that document traversal methods, [ChildrenMixin.findAll](ChildrenMixin.md#findall) and [ChildrenMixin.findOne](ChildrenMixin.md#findone), can be up to several times faster in large documents that have invisible instance children.
 [ChildrenMixin.findAllWithCriteria](ChildrenMixin.md#findallwithcriteria) can be up to hundreds of times faster in large documents.
 
-***
+---
 
 ### teamLibrary
 
@@ -309,7 +316,7 @@ Defined in: figmaPluginTypes.ts:443
 
 This property contains methods to work with assets residing in a team library.
 
-***
+---
 
 ### textreview?
 
@@ -321,7 +328,7 @@ Note: `textreview` must be specified in the capabilities array in `manifest.json
 
 This property contains methods that enable text review features in your plugin.
 
-***
+---
 
 ### timer?
 
@@ -335,7 +342,7 @@ This property contains methods used to read, set, and modify the built in FigJam
 
 Read more in the [timer section](https://www.figma.com/plugin-docs/api/figma-timer).
 
-***
+---
 
 ### ui
 
@@ -347,7 +354,7 @@ This property contains methods used to modify and communicate with the UI create
 
 Read more in the [UI section](https://www.figma.com/plugin-docs/api/figma-ui).
 
-***
+---
 
 ### util
 
@@ -359,7 +366,7 @@ This property contains convenience functions for common operations.
 
 Read more in the [util section](https://www.figma.com/plugin-docs/api/figma-util).
 
-***
+---
 
 ### variables
 
@@ -369,7 +376,7 @@ Defined in: figmaPluginTypes.ts:441
 
 This property contains methods to work with Variables and Variable Collections within Figma.
 
-***
+---
 
 ### viewport
 
@@ -381,7 +388,7 @@ This property contains methods used to read and set the viewport, the user-visib
 
 Read more in the [viewport section](https://www.figma.com/plugin-docs/api/figma-viewport).
 
-***
+---
 
 ### vscode?
 
@@ -393,7 +400,7 @@ This property contains methods used to integrate with the Figma for VS Code exte
 
 Read more in [Dev Mode plugins in Visual Studio Code](https://www.figma.com/plugin-docs/working-in-dev-mode/#dev-mode-plugins-in-visual-studio-code)
 
-***
+---
 
 ### widgetId?
 
@@ -423,7 +430,7 @@ Decodes and returns a Uint8Array from the base64-encoded string `data`.
 
 `Uint8Array`
 
-***
+---
 
 ### base64Encode()
 
@@ -443,7 +450,7 @@ Returns a base64-encoded string from the Uint8Array `data`.
 
 `string`
 
-***
+---
 
 ### closePlugin()
 
@@ -471,9 +478,9 @@ Calling `figma.closePlugin()` disables callbacks and Figma APIs. It does not, ho
 
 ```ts title="Simple closePlugin"
 if (figma.currentPage.selection.length !== 1) {
-  figma.closePlugin()
+  figma.closePlugin();
 }
-figma.currentPage.selection[0].opacity = 0.5
+figma.currentPage.selection[0].opacity = 0.5;
 ```
 
 This will not work. The last line will still run, but will throw an exception because access to `figma.currentPage` has been disabled. As such, it is not recommended to run any code after calling `figma.closePlugin()`.
@@ -483,12 +490,12 @@ A simple way to easily exit your plugin is to wrap your plugin in a function, in
 ```ts title="Early return"
 function main() {
   if (figma.currentPage.selection.length !== 1) {
-    figma.closePlugin()
-    return
+    figma.closePlugin();
+    return;
   }
-  figma.currentPage.selection[0].opacity = 0.5
+  figma.currentPage.selection[0].opacity = 0.5;
 }
-main()
+main();
 ```
 
 It's good practice to have all input validation done at the start of the plugin. However, there may be cases where the plugin may need to close after a chain of multiple function calls. If you expect to have to close the plugin deep within your code, but don't want to necessarily want the user to see an error, the example above will not be sufficient.
@@ -496,30 +503,30 @@ It's good practice to have all input validation done at the start of the plugin.
 One alternative is to use a top-level try-catch statement. However, you will need to be responsible for making sure that there are no usages of try-catch between the top-level try-catch and the call to `figma.closePlugin()`, or to pass along the close command if necessary. Example:
 
 ```ts title="Top-level try-catch"
-const CLOSE_PLUGIN_MSG = "_CLOSE_PLUGIN_"
+const CLOSE_PLUGIN_MSG = "_CLOSE_PLUGIN_";
 function someNestedFunctionCallThatClosesThePlugin() {
-  throw CLOSE_PLUGIN_MSG
+  throw CLOSE_PLUGIN_MSG;
 }
 
 function main() {
-  someNestedFunctionCallThatClosesThePlugin()
+  someNestedFunctionCallThatClosesThePlugin();
 }
 
 try {
-  main()
+  main();
 } catch (e) {
   if (e === CLOSE_PLUGIN_MSG) {
-    figma.closePlugin()
+    figma.closePlugin();
   } else {
     // >> DO NOT LEAVE THIS OUT <<
     // If we caught any other kind of exception,
     // it's a real error and should be passed along.
-    throw e
+    throw e;
   }
 }
 ```
 
-***
+---
 
 ### combineAsVariants()
 
@@ -560,14 +567,14 @@ An optional index argument that specifies where inside `parent` the new componen
 This API is roughly the equivalent of pressing the "Combine as Variants" button in the editor, but combines the specified list of nodes rather than the current selection. You may still, of course, combine the current selection as variants by passing it as an argument:
 
 ```ts title="Combining variants"
-figma.combineAsVariants(figma.currentPage.selection, parent)
+figma.combineAsVariants(figma.currentPage.selection, parent);
 ```
 
 Note: Why is there no `figma.createComponentSet()` function? It would create an empty component set, and empty component sets are not supported in Figma.
 
 Since combining as variants involves moving nodes to a different parent, this operation is subject to many reparenting restrictions:
 
-***
+---
 
 ### commitUndo()
 
@@ -587,12 +594,15 @@ By default, plugin actions are not committed to undo history. Call `figma.commit
 undos can revert a subset of plugin actions.
 
 For example, after running the following plugin code, the first triggered undo will undo both the rectangle and the ellipse:
+
 ```ts
 figma.createRectangle();
 figma.createEllipse();
 figma.closePlugin();
 ```
+
 Whereas if we call `commitUndo()` in our plugin, the first triggered undo will only undo the ellipse:
+
 ```ts
 figma.createRectangle();
 figma.commitUndo();
@@ -600,7 +610,7 @@ figma.createEllipse();
 figma.closePlugin();
 ```
 
-***
+---
 
 ### ~~createBooleanOperation()~~
 
@@ -621,16 +631,16 @@ Creates a new, empty boolean operation node. The particular kind of operation is
 This snippet, for example, creates a boolean operation node that is a union of a rectangle and an ellipse.
 
 ```ts title="Create a boolean operation node"
-const node = figma.createBooleanOperation()
-node.appendChild(figma.createRectangle())
-node.appendChild(figma.createEllipse())
+const node = figma.createBooleanOperation();
+node.appendChild(figma.createRectangle());
+node.appendChild(figma.createEllipse());
 ```
 
 #### Deprecated
 
 Use [PluginAPI.union](#union), [PluginAPI.subtract](#subtract), [PluginAPI.intersect](#intersect), [PluginAPI.exclude](#exclude) instead.
 
-***
+---
 
 ### createCodeBlock()
 
@@ -646,7 +656,7 @@ Creates a new code block.
 
 [`CodeBlockNode`](CodeBlockNode.md)
 
-***
+---
 
 ### createComponent()
 
@@ -669,10 +679,10 @@ By default, the new node has width and height both at 100, and is parented under
 This function creates a brand new component. To create a component from an existing node, use [PluginAPI.createComponentFromNode](#createcomponentfromnode).
 
 ```ts title="Create a component"
-const component = figma.createComponent()
+const component = figma.createComponent();
 ```
 
-***
+---
 
 ### createComponentFromNode()
 
@@ -702,7 +712,7 @@ There are many restrictions on what nodes can be turned into components. For exa
 
 If you try to create a component from a node that cannot be turned into a component, then the function will throw a `Cannot create component from node` error.
 
-```ts title="Create a component from a node"
+````ts title="Create a component from a node"
 const frame = figma.createFrame()
 const component = figma.createComponentFromNode(frame)
 
@@ -745,9 +755,9 @@ connector.connectorEnd = {
   endpointNodeId: stickyRight.id,
   magnet: 'AUTO'
 }
-```
+````
 
-***
+---
 
 ### createEffectStyle()
 
@@ -763,7 +773,7 @@ Creates a new Effect style.
 
 [`EffectStyle`](EffectStyle.md)
 
-***
+---
 
 ### createEllipse()
 
@@ -782,23 +792,23 @@ Creates a new ellipse. The behavior is similar to using the `O` shortcut followe
 By default, the new node has a default fill, width and height both at 100, and is parented under `figma.currentPage`.
 
 ```ts title="Create a red, U-shaped half donut"
-const ellipse = figma.createEllipse()
+const ellipse = figma.createEllipse();
 
 // Move to (50, 50)
-ellipse.x = 50
-ellipse.y = 50
+ellipse.x = 50;
+ellipse.y = 50;
 
 // Set size to 200 x 100
-ellipse.resize(200, 100)
+ellipse.resize(200, 100);
 
 // Set solid red fill
-ellipse.fills = [{ type: 'SOLID', color: { r: 1, g: 0, b: 0 } }]
+ellipse.fills = [{ type: "SOLID", color: { r: 1, g: 0, b: 0 } }];
 
 // Arc from 0° to 180° clockwise
-ellipse.arcData = {startingAngle: 0, endingAngle: Math.PI, innerRadius: 0.5}
+ellipse.arcData = { startingAngle: 0, endingAngle: Math.PI, innerRadius: 0.5 };
 ```
 
-***
+---
 
 ### createFrame()
 
@@ -817,17 +827,17 @@ Creates a new frame. The behavior is similar to using the `F` shortcut followed 
 By default, the new node has a white background, width and height both at 100, and is parented under `figma.currentPage`.
 
 ```ts title="Create a frame"
-const frame = figma.createFrame()
+const frame = figma.createFrame();
 
 // Move to (50, 50)
-frame.x = 50
-frame.y = 50
+frame.x = 50;
+frame.y = 50;
 
 // Set size to 1280 x 720
-frame.resize(1280, 720)
+frame.resize(1280, 720);
 ```
 
-***
+---
 
 ### createGif()
 
@@ -853,7 +863,7 @@ Creates a new GIF with the given `Image` hash.
 
 This API is only available in FigJam
 
-***
+---
 
 ### createGridStyle()
 
@@ -869,7 +879,7 @@ Creates a new Grid style.
 
 [`GridStyle`](GridStyle.md)
 
-***
+---
 
 ### createImage()
 
@@ -894,7 +904,7 @@ Creates an `Image` object from the raw bytes of a file content. Note that `Image
 
 The `data` passed in must be encoded as a PNG, JPEG, or GIF. Images have a maximum size of 4096 pixels (4K) in width and height. Invalid images will throw an error.
 
-***
+---
 
 ### createImageAsync()
 
@@ -919,34 +929,34 @@ Creates an `Image` object from a src URL. Note that `Image` objects **are not no
 The `src` passed in must be a URL to a PNG, JPEG, or GIF. Images have a maximum size of 4096 pixels (4K) in width and height. Invalid images will reject and log the reason in the console.
 
 ```ts title="Example usage of createImageAsync"
+figma
+  .createImageAsync("https://picsum.photos/200")
+  .then(async (image: Image) => {
+    // Create node
+    const node = figma.createRectangle();
 
- figma.createImageAsync(
-     'https://picsum.photos/200'
-   ).then(async (image: Image) => {
-     // Create node
-     const node = figma.createRectangle()
+    // Resize the node to match the image's width and height
+    const { width, height } = await image.getSizeAsync();
+    node.resize(width, height);
 
-     // Resize the node to match the image's width and height
-     const { width, height } = await image.getSizeAsync()
-     node.resize(width, height)
+    // Set the fill on the node
+    node.fills = [
+      {
+        type: "IMAGE",
+        imageHash: image.hash,
+        scaleMode: "FILL",
+      },
+    ];
 
-     // Set the fill on the node
-     node.fills = [
-       {
-         type: 'IMAGE',
-         imageHash: image.hash,
-         scaleMode: 'FILL'
-       }
-     ]
-
-     figma.closePlugin()
-   }).catch((error: any) => {
-     console.log(error)
-     figma.closePlugin()
-   })
+    figma.closePlugin();
+  })
+  .catch((error: any) => {
+    console.log(error);
+    figma.closePlugin();
+  });
 ```
 
-***
+---
 
 ### createLine()
 
@@ -965,22 +975,22 @@ Creates a new line.
 By default, the new node is 100 in width, has a black stroke, with weight 1, and is parented under `figma.currentPage`.
 
 ```ts title="Create a line and set basic styles"
-const line = figma.createLine()
+const line = figma.createLine();
 
 // Move to (50, 50)
-line.x = 50
-line.y = 50
+line.x = 50;
+line.y = 50;
 
 // Make line 200px long
-line.resize(200, 0)
+line.resize(200, 0);
 
 // 4px thick red line with arrows at each end
-line.strokeWeight = 4
-line.strokes = [{ type: 'SOLID', color: { r: 1, g: 0, b: 0 } }]
-line.strokeCap = 'ARROW_LINES'
+line.strokeWeight = 4;
+line.strokes = [{ type: "SOLID", color: { r: 1, g: 0, b: 0 } }];
+line.strokeCap = "ARROW_LINES";
 ```
 
-***
+---
 
 ### createLinkPreviewAsync()
 
@@ -1012,14 +1022,18 @@ This API is only available in FigJam
 ```ts title="Creating embeds and link unfurl nodes"
 (async () => {
   // Creates an EmbedNode
-  const youtubeEmbed = await figma.createLinkPreviewAsync('https://www.youtube.com/watch?v=4G9RHt2OyuY')
+  const youtubeEmbed = await figma.createLinkPreviewAsync(
+    "https://www.youtube.com/watch?v=4G9RHt2OyuY"
+  );
 
   // Creates a LinkUnfurlNode
-  const unfurledLink = await figma.createLinkPreviewAsync('https://www.figma.com/community/plugins')
-})()
+  const unfurledLink = await figma.createLinkPreviewAsync(
+    "https://www.figma.com/community/plugins"
+  );
+})();
 ```
 
-***
+---
 
 ### createNodeFromJSXAsync()
 
@@ -1044,13 +1058,13 @@ This API creates a new node using the JSX API used by widgets.
 This API is a convenient and ergonomic way to bulk create nodes:
 
 ```tsx
-const {Image, AutoLayout} = figma.widget;
+const { Image, AutoLayout } = figma.widget;
 
 const node = await figma.createNodeFromJSXAsync(
- <AutoLayout fill="#F00" padding={20}>
-   <Image src="https://picsum.photos/200" width={200} height={200}/>
- </AutoLayout>
-)
+  <AutoLayout fill="#F00" padding={20}>
+    <Image src="https://picsum.photos/200" width={200} height={200} />
+  </AutoLayout>
+);
 ```
 
 Note: The JSX API does not support all features that exist on the equivalent SceneNode.
@@ -1096,25 +1110,20 @@ added.
     "jsxFactory": "figma.widget.h",
     "jsxFragmentFactory": "figma.widget.Fragment",
     "target": "es6",
-    "lib": [
-      "es6"
-    ],
+    "lib": ["es6"],
     "strict": true,
-    "typeRoots": [
-      "./node_modules/@types",
-      "./node_modules/@figma"
-    ]
+    "typeRoots": ["./node_modules/@types", "./node_modules/@figma"]
   }
 }
-
 ```
+
 Note: If you are using a build system (ex babel, vite, esbuild). You might have to configure the jsx options for your build system.
 
 ### Change file extension
 
 For plugins our default template puts your code in a `code.ts` file. You should rename this to `code.tsx` so that you can use jsx in your plugin.
 
-***
+---
 
 ### createNodeFromSvg()
 
@@ -1134,7 +1143,7 @@ Creates a new node from an SVG string. This is equivalent to the SVG import feat
 
 [`FrameNode`](FrameNode.md)
 
-***
+---
 
 ### createPage()
 
@@ -1161,7 +1170,7 @@ The Starter plan only comes with 3 pages. Upgrade to
 Professional for unlimited pages.
 ```
 
-***
+---
 
 ### createPageDivider()
 
@@ -1187,7 +1196,7 @@ An optional argument to specify the name of the page divider node. It won't chan
 
 A page divider is always the child of the document node and cannot have any children.
 
-***
+---
 
 ### createPaintStyle()
 
@@ -1203,7 +1212,7 @@ Creates a new Paint style. This might be referred to as a Color style, or Fill s
 
 [`PaintStyle`](PaintStyle.md)
 
-***
+---
 
 ### createPolygon()
 
@@ -1222,23 +1231,23 @@ Creates a new polygon (defaults to a triangle).
 By default, the new node has three edges (i.e. a triangle), a default fill, width and height both at 100, and is parented under `figma.currentPage`.
 
 ```ts title="Create a red octagon"
-const polygon = figma.createPolygon()
+const polygon = figma.createPolygon();
 
 // Move to (50, 50)
-polygon.x = 50
-polygon.y = 50
+polygon.x = 50;
+polygon.y = 50;
 
 // Set size to 200 x 200
-polygon.resize(200, 200)
+polygon.resize(200, 200);
 
 // Make the polygon 8-sided
-polygon.pointCount = 8
+polygon.pointCount = 8;
 
 // Set solid red fill
-polygon.fills = [{ type: 'SOLID', color: { r: 1, g: 0, b: 0 } }]
+polygon.fills = [{ type: "SOLID", color: { r: 1, g: 0, b: 0 } }];
 ```
 
-***
+---
 
 ### createRectangle()
 
@@ -1257,20 +1266,20 @@ Creates a new rectangle. The behavior is similar to using the `R` shortcut follo
 By default, the new node has a default fill, width and height both at 100, and is parented under `figma.currentPage`.
 
 ```ts title="Create a rectangle and set basic styles"
-const rect = figma.createRectangle()
+const rect = figma.createRectangle();
 
 // Move to (50, 50)
-rect.x = 50
-rect.y = 50
+rect.x = 50;
+rect.y = 50;
 
 // Set size to 200 x 100
-rect.resize(200, 100)
+rect.resize(200, 100);
 
 // Set solid red fill
-rect.fills = [{ type: 'SOLID', color: { r: 1, g: 0, b: 0 } }]
+rect.fills = [{ type: "SOLID", color: { r: 1, g: 0, b: 0 } }];
 ```
 
-***
+---
 
 ### createSection()
 
@@ -1284,7 +1293,7 @@ Creates a new section
 
 [`SectionNode`](SectionNode.md)
 
-***
+---
 
 ### createShapeWithText()
 
@@ -1306,16 +1315,16 @@ By default, the new node has a width and height of 208, and is parented under `f
 
 ```ts title="Create a rounded rectangle shape with text"
 (async () => {
-  const shape = figma.createShapeWithText()
-  shape.shapeType = 'ROUNDED_RECTANGLE'
+  const shape = figma.createShapeWithText();
+  shape.shapeType = "ROUNDED_RECTANGLE";
 
   // Load the font before setting characters
-  await figma.loadFontAsync(shape.text.fontName)
-  shape.text.characters = 'Hello world!'
-})()
+  await figma.loadFontAsync(shape.text.fontName);
+  shape.text.characters = "Hello world!";
+})();
 ```
 
-***
+---
 
 ### createSlice()
 
@@ -1335,32 +1344,34 @@ By default, the new node is parented under `figma.currentPage`.
 
 ```ts title="Create a slice and export as PNG"
 (async () => {
-  const slice = figma.createSlice()
+  const slice = figma.createSlice();
 
   // Move to (50, 50)
-  slice.x = 50
-  slice.y = 50
+  slice.x = 50;
+  slice.y = 50;
 
   // Set size to 500 x 500
-  slice.resize(500, 500)
+  slice.resize(500, 500);
 
   // Export a PNG of this region of the canvas
-  const bytes = await slice.exportAsync()
+  const bytes = await slice.exportAsync();
 
   // Add the image onto the canvas as an image fill in a frame
-  const image = figma.createImage(bytes)
-  const frame = figma.createFrame()
-  frame.resize(500, 500)
-  frame.fills = [{
-    imageHash: image.hash,
-    scaleMode: "FILL",
-    scalingFactor: 1,
-    type: "IMAGE",
-  }]
-})()
+  const image = figma.createImage(bytes);
+  const frame = figma.createFrame();
+  frame.resize(500, 500);
+  frame.fills = [
+    {
+      imageHash: image.hash,
+      scaleMode: "FILL",
+      scalingFactor: 1,
+      type: "IMAGE",
+    },
+  ];
+})();
 ```
 
-***
+---
 
 ### createSlide()
 
@@ -1389,16 +1400,16 @@ Note: This API is only available in Figma Slides
 By default, the slide gets appended to the end of the presentation (the last child in the last Slide Row).
 
 ```ts title="Create a slide"
-const slide = figma.createSlide()
+const slide = figma.createSlide();
 ```
 
 To specify a position in the Slide Grid, pass a row and column index to the function.
 
 ```ts title="Create a slide at index 0, 0"
-const slide = figma.createSlide(0, 0)
+const slide = figma.createSlide(0, 0);
 ```
 
-***
+---
 
 ### createSlideRow()
 
@@ -1425,16 +1436,16 @@ Creates a new Slide Row, which automatically gets appended to the Slide Grid.
 By default, the row gets appended to the end of the Slide Grid.
 
 ```ts title="Create a slide row"
-const slideRow = figma.createSlideRow()
+const slideRow = figma.createSlideRow();
 ```
 
 To specify a position in the Slide Grid, pass a row index to the function.
 
 ```ts title="Create a slide row at index 0"
-const slideRow = figma.createSlideRow(0)
+const slideRow = figma.createSlideRow(0);
 ```
 
-***
+---
 
 ### createStar()
 
@@ -1453,26 +1464,26 @@ Creates a new star.
 By default, the new node has five points edges (i.e. a canonical star), a default fill, width and height both at 100, and is parented under `figma.currentPage`.
 
 ```ts title="Create a red, 7-pointed star"
-const star = figma.createStar()
+const star = figma.createStar();
 
 // Move to (50, 50)
-star.x = 50
-star.y = 50
+star.x = 50;
+star.y = 50;
 
 // Set size to 200 x 200
-star.resize(200, 200)
+star.resize(200, 200);
 
 // Make the star 7-pointed
-star.pointCount = 7
+star.pointCount = 7;
 
 // Set solid red fill
-star.fills = [{ type: 'SOLID', color: { r: 1, g: 0, b: 0 } }]
+star.fills = [{ type: "SOLID", color: { r: 1, g: 0, b: 0 } }];
 
 // Make the angles of each point less acute
-star.innerRadius = 0.6
+star.innerRadius = 0.6;
 ```
 
-***
+---
 
 ### createSticky()
 
@@ -1494,15 +1505,15 @@ By default, the new node has constant width and height both at 240, and is paren
 
 ```ts title="Create a sticky with text"
 (async () => {
-  const sticky = figma.createSticky()
+  const sticky = figma.createSticky();
 
   // Load the font before setting characters
-  await figma.loadFontAsync(sticky.text.fontName)
-  sticky.text.characters = 'Hello world!'
-})()
+  await figma.loadFontAsync(sticky.text.fontName);
+  sticky.text.characters = "Hello world!";
+})();
 ```
 
-***
+---
 
 ### createTable()
 
@@ -1535,24 +1546,24 @@ By default, a table has two rows and two columns, and is parented under `figma.c
 ```ts title="Create a table and add text to cells inside"
 (async () => {
   // Create a table with 2 rows and 3 columns
-  const table = figma.createTable(2, 3)
+  const table = figma.createTable(2, 3);
 
   // Load the font before setting characters
-  await figma.loadFontAsync(table.cellAt(0, 0).text.fontName)
+  await figma.loadFontAsync(table.cellAt(0, 0).text.fontName);
 
   // Sets characters for the table cells:
   // A B C
   // 1 2 3
-  table.cellAt(0, 0).text.characters = 'A'
-  table.cellAt(0, 1).text.characters = 'B'
-  table.cellAt(0, 2).text.characters = 'C'
-  table.cellAt(1, 0).text.characters = '1'
-  table.cellAt(1, 1).text.characters = '2'
-  table.cellAt(1, 2).text.characters = '3'
-})()
+  table.cellAt(0, 0).text.characters = "A";
+  table.cellAt(0, 1).text.characters = "B";
+  table.cellAt(0, 2).text.characters = "C";
+  table.cellAt(1, 0).text.characters = "1";
+  table.cellAt(1, 1).text.characters = "2";
+  table.cellAt(1, 2).text.characters = "3";
+})();
 ```
 
-***
+---
 
 ### createText()
 
@@ -1572,23 +1583,23 @@ By default, parented under `figma.currentPage`. Without setting additional prope
 
 ```ts title="Create a styled 'Hello world!' text node"
 (async () => {
-  const text = figma.createText()
+  const text = figma.createText();
 
   // Move to (50, 50)
-  text.x = 50
-  text.y = 50
+  text.x = 50;
+  text.y = 50;
 
   // Load the font in the text node before setting the characters
-  await figma.loadFontAsync(text.fontName)
-  text.characters = 'Hello world!'
+  await figma.loadFontAsync(text.fontName);
+  text.characters = "Hello world!";
 
   // Set bigger font size and red color
-  text.fontSize = 18
-  text.fills = [{ type: 'SOLID', color: { r: 1, g: 0, b: 0 } }]
-})()
+  text.fontSize = 18;
+  text.fills = [{ type: "SOLID", color: { r: 1, g: 0, b: 0 } }];
+})();
 ```
 
-***
+---
 
 ### createTextStyle()
 
@@ -1604,7 +1615,7 @@ Creates a new Text style. By default, the text style has the Figma default text 
 
 [`TextStyle`](TextStyle.md)
 
-***
+---
 
 ### createVector()
 
@@ -1622,7 +1633,7 @@ Creates a new, empty vector network with no vertices.
 
 By default, parented under `figma.currentPage`. Without setting additional properties, the vector has a bounding box but doesn’t have any vertices. There are two ways to assign vertices to a vector node - [`vectorPaths`](https://www.figma.com/plugin-docs/api/VectorNode#vectorpaths) and [`setVectorNetworkAsync`](https://www.figma.com/plugin-docs/api/VectorNode#setvectornetworkasync). Please refer to the documentation of those properties for more details.
 
-***
+---
 
 ### createVideoAsync()
 
@@ -1648,7 +1659,7 @@ The `data` passed in must be encoded as a .MP4, .MOV, or .WebM. Videos have a ma
 
 Video can only be added to files in a paid Education, Professional, and Organization team. Plugins running on files in free Starter teams can edit existing video in a file but not upload video to it.
 
-***
+---
 
 ### exclude()
 
@@ -1676,7 +1687,7 @@ readonly [`BaseNode`](../type-aliases/BaseNode.md)[]
 
 [`BooleanOperationNode`](BooleanOperationNode.md)
 
-***
+---
 
 ### flatten()
 
@@ -1715,12 +1726,12 @@ An optional index argument that specifies where inside `parent` the new vector w
 This API is roughly the equivalent of pressing Ctrl-E/⌘E in the editor, but flattens the specified list of nodes rather than the current selection. You may still, of course, flatten the current selection by passing it as an argument:
 
 ```ts title="Flatten nodes"
-figma.flatten(figma.currentPage.selection, parent)
+figma.flatten(figma.currentPage.selection, parent);
 ```
 
 Since flattening involves moving nodes to a different parent, this operation is subject to many reparenting restrictions:
 
-***
+---
 
 ### ~~getFileThumbnailNode()~~
 
@@ -1738,7 +1749,7 @@ Use [PluginAPI.getFileThumbnailNodeAsync](#getfilethumbnailnodeasync) instead. T
 
 Gets the node that is currently being used for file thumbnail, or null if the default thumbnail is used.
 
-***
+---
 
 ### getFileThumbnailNodeAsync()
 
@@ -1752,7 +1763,7 @@ Gets the node that is currently being used for file thumbnail, or null if the de
 
 `Promise`\<`null` \| [`FrameNode`](FrameNode.md) \| [`ComponentSetNode`](ComponentSetNode.md) \| [`ComponentNode`](ComponentNode.md) \| [`SectionNode`](SectionNode.md)\>
 
-***
+---
 
 ### getImageByHash()
 
@@ -1772,7 +1783,7 @@ This gets the corresponding `Image` object for a given image hash, which can the
 
 `null` \| [`Image`](Image.md)
 
-***
+---
 
 ### ~~getLocalEffectStyles()~~
 
@@ -1790,7 +1801,7 @@ Use [PluginAPI.getLocalEffectStylesAsync](#getlocaleffectstylesasync) instead. T
 
 Returns the list of local effect styles.
 
-***
+---
 
 ### getLocalEffectStylesAsync()
 
@@ -1804,7 +1815,7 @@ Returns the list of local effect styles.
 
 `Promise`\<[`EffectStyle`](EffectStyle.md)[]\>
 
-***
+---
 
 ### ~~getLocalGridStyles()~~
 
@@ -1822,7 +1833,7 @@ Returns the list of local grid styles.
 
 Use [PluginAPI.getLocalGridStylesAsync](#getlocalgridstylesasync) instead. This function will throw an exception if the plugin manifest contains `"documentAccess": "dynamic-page"`.
 
-***
+---
 
 ### getLocalGridStylesAsync()
 
@@ -1836,7 +1847,7 @@ Returns the list of local grid styles.
 
 `Promise`\<[`GridStyle`](GridStyle.md)[]\>
 
-***
+---
 
 ### ~~getLocalPaintStyles()~~
 
@@ -1854,7 +1865,7 @@ Use [PluginAPI.getLocalPaintStylesAsync](#getlocalpaintstylesasync) instead. Thi
 
 Returns the list of local paint styles.
 
-***
+---
 
 ### getLocalPaintStylesAsync()
 
@@ -1868,7 +1879,7 @@ Returns the list of local paint styles.
 
 `Promise`\<[`PaintStyle`](PaintStyle.md)[]\>
 
-***
+---
 
 ### ~~getLocalTextStyles()~~
 
@@ -1886,7 +1897,7 @@ Use [PluginAPI.getLocalTextStylesAsync](#getlocaltextstylesasync) instead. This 
 
 Returns the list of local text styles.
 
-***
+---
 
 ### getLocalTextStylesAsync()
 
@@ -1900,7 +1911,7 @@ Returns the list of local text styles.
 
 `Promise`\<[`TextStyle`](TextStyle.md)[]\>
 
-***
+---
 
 ### ~~getNodeById()~~
 
@@ -1924,7 +1935,7 @@ Use [PluginAPI.getNodeByIdAsync](#getnodebyidasync) instead. This function will 
 
 Finds a node by its id in the current document. Every node has an `id` property, which is unique within the document. If the id is invalid, or the node cannot be found (e.g. removed), returns null.
 
-***
+---
 
 ### getNodeByIdAsync()
 
@@ -1944,7 +1955,7 @@ Finds a node by its id in the current document. Every node has an `id` property,
 
 `Promise`\<`null` \| [`BaseNode`](../type-aliases/BaseNode.md)\>
 
-***
+---
 
 ### getSelectionColors()
 
@@ -1969,7 +1980,7 @@ if there are too many colors in the selection (>1000).
 
 `null` \| \{ `paints`: [`Paint`](../type-aliases/Paint.md)[]; `styles`: [`PaintStyle`](PaintStyle.md)[]; \}
 
-***
+---
 
 ### getSlideGrid()
 
@@ -1990,7 +2001,7 @@ The order of Slides within a presentation is a key part of updating and editing 
 To visualize the slide nodes in a 2D array, you can call this function.
 
 ```ts
-const grid = figma.getSlideGrid()
+const grid = figma.getSlideGrid();
 ```
 
 The returned grid is a 2D array of SlideNodes. For example:
@@ -2001,10 +2012,10 @@ The returned grid is a 2D array of SlideNodes. For example:
   [SlideNode, SlideNode, SlideNode, SlideNode, SlideNode],
   [SlideNode, SlideNode, SlideNode, SlideNode, SlideNode],
   [SlideNode, SlideNode, SlideNode],
-]
+];
 ```
 
-***
+---
 
 ### ~~getStyleById()~~
 
@@ -2028,7 +2039,7 @@ Use [PluginAPI.getStyleByIdAsync](#getstylebyidasync) instead. This function wil
 
 Finds a style by its id in the current document. If not found, returns null.
 
-***
+---
 
 ### getStyleByIdAsync()
 
@@ -2048,7 +2059,7 @@ Finds a style by its id in the current document. If not found, returns a promise
 
 `Promise`\<`null` \| [`BaseStyle`](../type-aliases/BaseStyle.md)\>
 
-***
+---
 
 ### group()
 
@@ -2087,16 +2098,16 @@ An optional index argument that specifies where inside `parent` the new group wi
 This API is roughly the equivalent of pressing Ctrl-G/⌘G in the editor, but groups the specified list of nodes rather than the current selection. You may still, of course, group the current selection by passing it as an argument:
 
 ```ts title="Group nodes"
-figma.group(figma.currentPage.selection, parent)
+figma.group(figma.currentPage.selection, parent);
 ```
 
 Note: Why is there no `figma.createGroup()` function? It would create an empty group, and empty groups are not supported in Figma.
 
-Note: Why do we require `figma.group(...)` to specify the parent, rather let you call `parent.appendChild(group)` separately? It allows you to create the new group while keeping all the grouped layers in the same absolute x/y locations. The method `.appendChild` preserves the *relative* position of a node, so if you use `.appendChild` to populate a group, you would need to do additional work to put them back in their original location if that was the desired behavior.
+Note: Why do we require `figma.group(...)` to specify the parent, rather let you call `parent.appendChild(group)` separately? It allows you to create the new group while keeping all the grouped layers in the same absolute x/y locations. The method `.appendChild` preserves the _relative_ position of a node, so if you use `.appendChild` to populate a group, you would need to do additional work to put them back in their original location if that was the desired behavior.
 
 Since grouping involves moving nodes to a different parent, this operation is subject to many reparenting restrictions:
 
-***
+---
 
 ### importComponentByKeyAsync()
 
@@ -2116,7 +2127,7 @@ Loads a component node from the team library. Promise is rejected if there is no
 
 `Promise`\<[`ComponentNode`](ComponentNode.md)\>
 
-***
+---
 
 ### importComponentSetByKeyAsync()
 
@@ -2136,7 +2147,7 @@ Loads a component set node from the team library. Promise is rejected if there i
 
 `Promise`\<[`ComponentSetNode`](ComponentSetNode.md)\>
 
-***
+---
 
 ### importStyleByKeyAsync()
 
@@ -2156,7 +2167,7 @@ Loads a style from the team library. Promise is rejected if there is no style wi
 
 `Promise`\<[`BaseStyle`](../type-aliases/BaseStyle.md)\>
 
-***
+---
 
 ### intersect()
 
@@ -2184,7 +2195,7 @@ readonly [`BaseNode`](../type-aliases/BaseNode.md)[]
 
 [`BooleanOperationNode`](BooleanOperationNode.md)
 
-***
+---
 
 ### listAvailableFontsAsync()
 
@@ -2198,7 +2209,7 @@ Returns the lists of currently available fonts. This should be the same list as 
 
 `Promise`\<[`Font`](Font.md)[]\>
 
-***
+---
 
 ### loadAllPagesAsync()
 
@@ -2222,7 +2233,7 @@ This method is only necessary if the plugin manifest contains `"documentAccess":
 
 `Promise`\<`void`\>
 
-***
+---
 
 ### loadFontAsync()
 
@@ -2256,7 +2267,7 @@ A common question is whether a plugin needs to be careful about calling `loadFon
 
 However, note that `loadFontAsync` returns a Promise. Even a Promise resolves immediately, it still needs to round-trip to the JavaScript event loop. So you probably shouldn't call `loadFontAsync` on the same font repeatedly inside a loop.
 
-***
+---
 
 ### moveLocalEffectFolderAfter()
 
@@ -2282,7 +2293,7 @@ Reorders a target folder after the specified reference folder (if provided) or t
 
 `void`
 
-***
+---
 
 ### moveLocalEffectStyleAfter()
 
@@ -2308,7 +2319,7 @@ Reorders a target node after the specified reference node (if provided) or to be
 
 `void`
 
-***
+---
 
 ### moveLocalGridFolderAfter()
 
@@ -2334,7 +2345,7 @@ Reorders a target folder after the specified reference folder (if provided) or t
 
 `void`
 
-***
+---
 
 ### moveLocalGridStyleAfter()
 
@@ -2360,7 +2371,7 @@ Reorders a target node after the specified reference node (if provided) or to be
 
 `void`
 
-***
+---
 
 ### moveLocalPaintFolderAfter()
 
@@ -2386,7 +2397,7 @@ Reorders a target folder after the specified reference folder (if provided) or t
 
 `void`
 
-***
+---
 
 ### moveLocalPaintStyleAfter()
 
@@ -2412,7 +2423,7 @@ Reorders a target node after the specified reference node (if provided) or to be
 
 `void`
 
-***
+---
 
 ### moveLocalTextFolderAfter()
 
@@ -2438,7 +2449,7 @@ Reorders a target folder after the specified reference folder (if provided) or t
 
 `void`
 
-***
+---
 
 ### moveLocalTextStyleAfter()
 
@@ -2464,7 +2475,7 @@ Reorders a target node after the specified reference node (if provided) or to be
 
 `void`
 
-***
+---
 
 ### notify()
 
@@ -2492,11 +2503,11 @@ An optional argument with the following optional parameters:
 interface NotificationOptions {
   timeout?: number;
   error?: boolean;
-  onDequeue?: (reason: NotifyDequeueReason) => void
+  onDequeue?: (reason: NotifyDequeueReason) => void;
   button?: {
-    text: string
-    action: () => boolean | void
-  }
+    text: string;
+    action: () => boolean | void;
+  };
 }
 ```
 
@@ -2504,12 +2515,14 @@ interface NotificationOptions {
 - `error`: If true, display the notification as an error message, with a different color.
 - `onDequeue`: A function that will run when the notification is dequeued. This can happen due to the timeout being reached, the notification being dismissed by the user or Figma, or the user clicking the notification's `button`.
   - The function is passed a `NotifyDequeueReason`, which is defined as the following:
+
 ```ts
- type NotifyDequeueReason = 'timeout' | 'dismiss' | 'action_button_click'
- ```
+type NotifyDequeueReason = "timeout" | "dismiss" | "action_button_click";
+```
+
 - `button`: An object representing an action button that will be added to the notification.
-   - `text`: The message to display on the action button.
-   - `action`: The function to execute when the user clicks the button. If this function returns `false`, the message will remain when the button is clicked. Otherwise, clicking the action button dismisses the notify message.
+  - `text`: The message to display on the action button.
+  - `action`: The function to execute when the user clicks the button. If this function returns `false`, the message will remain when the button is clicked. Otherwise, clicking the action button dismisses the notify message.
 
 #### Returns
 
@@ -2525,13 +2538,13 @@ Calling `figma.notify` returns a `NotificationHandler` object. This object conta
 
 ```ts
 interface NotificationHandler {
-  cancel: () => void
+  cancel: () => void;
 }
 ```
 
 An alternative way to show a message to the user is to pass a message to the [PluginAPI.closePlugin](#closeplugin) function.
 
-***
+---
 
 ### off()
 
@@ -2562,16 +2575,22 @@ Removes a callback added with `figma.on` or `figma.once`.
 The callback needs to be the same object that was originally added. For example, you can do this:
 
 ```ts title="Correct way to remove a callback"
-let fn = () => { console.log("selectionchanged") }
-figma.on("selectionchange", fn)
-figma.off("selectionchange", fn)
+let fn = () => {
+  console.log("selectionchanged");
+};
+figma.on("selectionchange", fn);
+figma.off("selectionchange", fn);
 ```
 
 whereas the following won't work, because the function objects are different:
 
 ```ts title="Incorrect way to remove a callback"
-figma.on("selectionchange", () => { console.log("selectionchanged") })
-figma.off("selectionchange", () => { console.log("selectionchanged") })
+figma.on("selectionchange", () => {
+  console.log("selectionchanged");
+});
+figma.off("selectionchange", () => {
+  console.log("selectionchanged");
+});
 ```
 
 #### Call Signature
@@ -2694,7 +2713,7 @@ Defined in: figmaPluginTypes.ts:857
 
 `void`
 
-***
+---
 
 ### on()
 
@@ -2705,6 +2724,7 @@ Defined in: figmaPluginTypes.ts:857
 Defined in: figmaPluginTypes.ts:805
 
 Registers an callback that will be called when an event happens in the editor. Current supported events are:
+
 - The selection on the current page changed.
 - The current page changed.
 - The document has changed.
@@ -2730,15 +2750,15 @@ This is either an `ArgFreeEventType`, `run`, `drop`, or `documentchange`. The `r
 
 ```ts
 type ArgFreeEventType =
-  "selectionchange" |
-  "currentpagechange" |
-  "close" |
-  "timerstart" |
-  "timerstop" |
-  "timerpause" |
-  "timerresume" |
-  "timeradjust" |
-  "timerdone"
+  | "selectionchange"
+  | "currentpagechange"
+  | "close"
+  | "timerstart"
+  | "timerstop"
+  | "timerpause"
+  | "timerresume"
+  | "timeradjust"
+  | "timerdone";
 ```
 
 ###### callback
@@ -2763,10 +2783,12 @@ This API tries to match Node.js conventions around similar `.on` APIs.
 It's important to understand that the `.on` API runs the callbacks **asynchronously**. For example:
 
 ```ts
-figma.on("selectionchange", () => { console.log("changed") })
-console.log("before")
-figma.currentPage.selection = []
-console.log("after")
+figma.on("selectionchange", () => {
+  console.log("changed");
+});
+console.log("before");
+figma.currentPage.selection = [];
+console.log("after");
 
 // Output:
 // "before"
@@ -2779,15 +2801,17 @@ The asynchronous nature of these APIs have a few other implications.
 The callback will not necessarily be called each time the event happens. For example, this will only trigger the event once:
 
 ```ts
-figma.currentPage.selection = [figma.createRectangle()]
-figma.currentPage.selection = [figma.createFrame()]
+figma.currentPage.selection = [figma.createRectangle()];
+figma.currentPage.selection = [figma.createFrame()];
 ```
 
 Nor will the ordering of the event trigger and event registration affect whether the callback is called.
 
 ```ts
-figma.currentPage.selection = [figma.createFrame()]
-figma.on("selectionchange", () => { "this will get called!" })
+figma.currentPage.selection = [figma.createFrame()];
+figma.on("selectionchange", () => {
+  "this will get called!";
+});
 ```
 
 ## Available event types
@@ -2799,6 +2823,7 @@ This event will trigger when the user navigates to a different page, or when the
 ### `"selectionchange"`
 
 This event will trigger when the selection of the **current page** changes. This can happen:
+
 - By user action.
 - Due to plugin code.
 - When the current page changes (a `"currentpagechange"` event always triggers a `"selectionchange"` event).
@@ -2817,7 +2842,7 @@ The callback will be passed with a DocumentChangeEvent with the below interface:
 
 ```ts
 interface DocumentChangeEvent {
-  documentChanges: DocumentChange[]
+  documentChanges: DocumentChange[];
 }
 ```
 
@@ -2825,72 +2850,74 @@ Note: Note that `DocumentChangeEvent` has a `documentChanges` property with an a
 
 There are 6 different [DocumentChange](../type-aliases/DocumentChange.md) types that we currently notify on and we might add more in the future. Each of these changes has a `type` property to distinguish them:
 
-| Change                                                           | `type` property           | Description                                                                                                                                                                                                        |
-|------------------------------------------------------------------|---------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| [`CreateChange`](https://www.figma.com/plugin-docs/api/DocumentChange#createchange)               | `'CREATE'`                | A node has been created in the document. If a node with nested children is being added to the document a `CreateChange` will only be made for the highest level parent that was added to the document.             |
-| [`DeleteChange`](https://www.figma.com/plugin-docs/api/DocumentChange#deletechange)               | `'DELETE'`                | A node has been removed from the document. If a node with nested children is being removed from the document a  `DeleteChange`  will only be made for the highest level parent that was removed from the document. |
-| [`PropertyChange`](https://www.figma.com/plugin-docs/api/DocumentChange#propertychange)           | `'PROPERTY_CHANGE'`       | A property of a node has changed.                                                                                                                                                                                  |
-| [`StyleCreateChange`](https://www.figma.com/plugin-docs/api/DocumentChange#stylecreatechange)     | `'STYLE_CREATE'`          | A style has been added to the document.                                                                                                                                                                            |
-| [`StyleDeleteChange`](https://www.figma.com/plugin-docs/api/DocumentChange#styledeletechange)     | `'STYLE_DELETE'`          | A style has been removed from the document.                                                                                                                                                                        |
-| [`StylePropertyChange`](https://www.figma.com/plugin-docs/api/DocumentChange#stylepropertychange) | `'STYLE_PROPERTY_CHANGE'` | A style has had a property changed.                                                                                                                                                                                |
+| Change                                                                                            | `type` property           | Description                                                                                                                                                                                                      |
+| ------------------------------------------------------------------------------------------------- | ------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [`CreateChange`](https://www.figma.com/plugin-docs/api/DocumentChange#createchange)               | `'CREATE'`                | A node has been created in the document. If a node with nested children is being added to the document a `CreateChange` will only be made for the highest level parent that was added to the document.           |
+| [`DeleteChange`](https://www.figma.com/plugin-docs/api/DocumentChange#deletechange)               | `'DELETE'`                | A node has been removed from the document. If a node with nested children is being removed from the document a `DeleteChange` will only be made for the highest level parent that was removed from the document. |
+| [`PropertyChange`](https://www.figma.com/plugin-docs/api/DocumentChange#propertychange)           | `'PROPERTY_CHANGE'`       | A property of a node has changed.                                                                                                                                                                                |
+| [`StyleCreateChange`](https://www.figma.com/plugin-docs/api/DocumentChange#stylecreatechange)     | `'STYLE_CREATE'`          | A style has been added to the document.                                                                                                                                                                          |
+| [`StyleDeleteChange`](https://www.figma.com/plugin-docs/api/DocumentChange#styledeletechange)     | `'STYLE_DELETE'`          | A style has been removed from the document.                                                                                                                                                                      |
+| [`StylePropertyChange`](https://www.figma.com/plugin-docs/api/DocumentChange#stylepropertychange) | `'STYLE_PROPERTY_CHANGE'` | A style has had a property changed.                                                                                                                                                                              |
 
 #### Special cases
 
 We currently never notify a `'documentchange'` listener in the following scenarios:
+
 - if the change was caused directly by your plugin in a `documentchange` callback
 - if an instance sublayer was updated by a change to a main component
 - if a node was updated as a result of a style changing
 
 #### Example
+
 Here is an example of exhaustively checking changes to the document and logging them to the console.
 
 ```ts
 figma.on("documentchange", (event) => {
-for (const change of event.documentChanges) {
-  switch (change.type) {
-    case "CREATE":
-      console.log(
-        `Node ${change.id} created by a ${change.origin.toLowerCase()} user`
-      );
-      break;
-
-    case "DELETE":
-      console.log(
-        `Node ${change.id} deleted by a ${change.origin.toLowerCase()} user`
-      );
-      break;
-
-    case "PROPERTY_CHANGE":
-      for (const prop of change.properties) {
+  for (const change of event.documentChanges) {
+    switch (change.type) {
+      case "CREATE":
         console.log(
-          `Node ${
-            change.id
-          } had ${prop} changed by a ${change.origin.toLowerCase()} user`
+          `Node ${change.id} created by a ${change.origin.toLowerCase()} user`
         );
-      }
-      break;
+        break;
 
-    case "STYLE_CREATE":
-      console.log(
-        `Style ${change.id} created by a ${change.origin.toLowerCase()} user`
-      );
-      break;
+      case "DELETE":
+        console.log(
+          `Node ${change.id} deleted by a ${change.origin.toLowerCase()} user`
+        );
+        break;
 
-    case "STYLE_DELETE":
-      console.log(
-        `Style ${change.id} deleted by a ${change.origin.toLowerCase()} user`
-      );
-      break;
+      case "PROPERTY_CHANGE":
+        for (const prop of change.properties) {
+          console.log(
+            `Node ${
+              change.id
+            } had ${prop} changed by a ${change.origin.toLowerCase()} user`
+          );
+        }
+        break;
 
-     case "STYLE_PROPERTY_CHANGE":
-       for (const prop of change.properties) {
-         console.log(
+      case "STYLE_CREATE":
+        console.log(
+          `Style ${change.id} created by a ${change.origin.toLowerCase()} user`
+        );
+        break;
+
+      case "STYLE_DELETE":
+        console.log(
+          `Style ${change.id} deleted by a ${change.origin.toLowerCase()} user`
+        );
+        break;
+
+      case "STYLE_PROPERTY_CHANGE":
+        for (const prop of change.properties) {
+          console.log(
             `Style ${
               change.id
             } had ${prop} changed by a ${change.origin.toLowerCase()} user`
           );
-       }
-       break;
+        }
+        break;
     }
   }
 });
@@ -2905,22 +2932,24 @@ Note: This event is only available to plugins that have the `"textreview"` capab
 `"textreview"` events allow plugins to review text in a document and act as either a replacement or a supplement to native spell check.
 
 This event is triggered periodically when the user is typing in a text node. The callback will be passed with a TextReviewEvent with the below interface:
+
 ```ts
 interface TextReviewEvent {
-  text: string
+  text: string;
 }
 ```
 
 The `text` property is the text that the user has currently typed into the node.
 
 A `"textreview"` event listener should return a promise that resolves to an array of `TextReviewRange` objects. Each `TextReviewRange` object represents a single range of text that should be marked as either an error or a suggestion. The `TextReviewRange` interface is defined as:
+
 ```ts
 type TextReviewRange = {
-  start: number
-  end: number
-  suggestions: string[]
-  color?: 'RED' | 'GREEN' | 'BLUE'
-}
+  start: number;
+  end: number;
+  suggestions: string[];
+  color?: "RED" | "GREEN" | "BLUE";
+};
 ```
 
 The `start` property is the index of the first character in the range. The `end` property is the index of the last character in the range. The `suggestions` property is an array of strings that represent the suggestions for the range. The `color` property is optional and can be used to change the color of the underline that is drawn under the range. If no color is specified the underline will be red.
@@ -2934,16 +2963,17 @@ This event will trigger when objects outside Figma (such as elements from other 
 It can also be triggered by a special `pluginDrop` message sent from the UI. See the [Triggering drop events from the UI](https://www.figma.com/plugin-docs/creating-ui#triggering-drop-events-from-the-ui) section for more details.
 
 The callback will be passed a `DropEvent` with the below interface. It should return `false` if it wants to handle the particular drop and stop Figma from performing the default drop behavior.
+
 ```ts
 interface DropEvent {
-  node: BaseNode | SceneNode
-  x: number
-  y: number
-  absoluteX: number
-  absoluteY: number
-  items: DropItem[]
-  files: DropFile[]
-  dropMetadata?: any
+  node: BaseNode | SceneNode;
+  x: number;
+  y: number;
+  absoluteX: number;
+  absoluteY: number;
+  items: DropItem[];
+  files: DropFile[];
+  dropMetadata?: any;
 }
 ```
 
@@ -2958,15 +2988,15 @@ Items and files will conform to the below interfaces:
 
 ```ts
 interface DropItem {
-  type: string // e.g. "text/html", "text/uri-list", etc...
-  data: string
+  type: string; // e.g. "text/html", "text/uri-list", etc...
+  data: string;
 }
 
 interface DropFile {
-  name: string // file name
-  type: string // e.g. "image/png"
-  getBytesAsync(): Promise<Uint8Array> // get raw file bytes
-  getTextAsync(): Promise<string> // get text assuming file is UTF8-encoded
+  name: string; // file name
+  type: string; // e.g. "image/png"
+  getBytesAsync(): Promise<Uint8Array>; // get raw file bytes
+  getTextAsync(): Promise<string>; // get text assuming file is UTF8-encoded
 }
 ```
 
@@ -2993,10 +3023,11 @@ This is also not the place to run any asynchronous actions (e.g. register callba
 This event is triggered when a plugin is run. For plugins with parameters, this happens after all parameters have been enter by the user in the quick action UI. For all other plugins this happens immediately after launch.
 
 The callback will be passed a `RunEvent` that looks like:
+
 ```ts
 interface RunEvent {
-  parameters?: ParameterValues
-  command: string
+  parameters?: ParameterValues;
+  command: string;
 }
 ```
 
@@ -3014,24 +3045,25 @@ The callback will receive a StyleChangeEvent with the below interface:
 
 ```ts
 interface StyleChangeEvent {
-  styleChanges: StyleChange[]
+  styleChanges: StyleChange[];
 }
 ```
 
 There are 3 different [StyleChange](../type-aliases/StyleChange.md) types. Each of these changes has a `type` property to distinguish them:
 
-| Change | `type` property | Description |
-| --- | --- | --- |
-| [`StyleCreateChange`](https://www.figma.com/plugin-docs/api/StyleChange#stylecreatechange) | `'STYLE_CREATE'` | A style has been added to the document. |
-| [`StyleDeleteChange`](https://www.figma.com/plugin-docs/api/StyleChange#styledeletechange) | `'STYLE_DELETE'` | A style has been removed from the document. |
-| [`StylePropertyChange`](https://www.figma.com/plugin-docs/api/StyleChange#stylepropertychange) | `'STYLE_PROPERTY_CHANGE'` | A style has had a property changed. |
+| Change                                                                                         | `type` property           | Description                                 |
+| ---------------------------------------------------------------------------------------------- | ------------------------- | ------------------------------------------- |
+| [`StyleCreateChange`](https://www.figma.com/plugin-docs/api/StyleChange#stylecreatechange)     | `'STYLE_CREATE'`          | A style has been added to the document.     |
+| [`StyleDeleteChange`](https://www.figma.com/plugin-docs/api/StyleChange#styledeletechange)     | `'STYLE_DELETE'`          | A style has been removed from the document. |
+| [`StylePropertyChange`](https://www.figma.com/plugin-docs/api/StyleChange#stylepropertychange) | `'STYLE_PROPERTY_CHANGE'` | A style has had a property changed.         |
 
 ### `"timerstart"`
 
 This event will trigger when somebody starts a timer in the document. This can happen either by a user (either the current user or a multiplayer user) starting the timer from the UI, or triggered by plugin code. To inspect the current state of the timer when this event fires, use the `figma.timer` interface. For example:
+
 ```ts
-figma.on("timerstart", () => console.log(figma.timer.remaining))
-figma.timer.start(300)
+figma.on("timerstart", () => console.log(figma.timer.remaining));
+figma.timer.start(300);
 
 // Output:
 // 300
@@ -3177,7 +3209,7 @@ Defined in: figmaPluginTypes.ts:814
 
 `void`
 
-***
+---
 
 ### once()
 
@@ -3323,7 +3355,7 @@ Defined in: figmaPluginTypes.ts:827
 
 `void`
 
-***
+---
 
 ### openExternal()
 
@@ -3347,7 +3379,7 @@ Open a url in a new tab.
 
 In the VS Code Extension, this API is required to open a url in the browser. Read more in [Dev Mode plugins in Visual Studio Code](https://www.figma.com/plugin-docs/working-in-dev-mode/#dev-mode-plugins-in-visual-studio-code).
 
-***
+---
 
 ### saveVersionHistoryAsync()
 
@@ -3375,7 +3407,7 @@ Calling `saveVersionHistoryAsync` returns a promise that resolves to `null` or a
 
 ```ts
 interface VersionHistoryResult {
-  id: string
+  id: string;
 }
 ```
 
@@ -3389,27 +3421,31 @@ interface VersionHistoryResult {
 
 It is not guaranteed that all changes made before this method is used will be saved to version history.
 For example,
- ```ts title="Changes may not all be saved"
- async function example() {
-   await figma.createRectangle();
-   await figma.saveVersionHistoryAsync('v1');
-   figma.closePlugin();
- }
- example().catch((e) => figma.closePluginWithFailure(e))
- ```
-The newly created rectangle may not be included in the v1 version. As a work around, you can wait before calling `saveVersionHistoryAsync()`. For example,
- ```ts title="Wait to save"
- async function example() {
-   await figma.createRectangle();
-   await new Promise(r => setTimeout(r, 1000)); // wait for 1 second
-   await figma.saveVersionHistoryAsync('v1');
-   figma.closePlugin();
- }
+
+```ts title="Changes may not all be saved"
+async function example() {
+  await figma.createRectangle();
+  await figma.saveVersionHistoryAsync("v1");
+  figma.closePlugin();
+}
+example().catch((e) => figma.closePluginWithFailure(e));
 ```
+
+The newly created rectangle may not be included in the v1 version. As a work around, you can wait before calling `saveVersionHistoryAsync()`. For example,
+
+```ts title="Wait to save"
+async function example() {
+  await figma.createRectangle();
+  await new Promise((r) => setTimeout(r, 1000)); // wait for 1 second
+  await figma.saveVersionHistoryAsync("v1");
+  figma.closePlugin();
+}
+```
+
 Typically, manual changes that precede the execution of `saveVersionHistoryAsync()` will be included. If you want to use `saveVersionHistoryAsync()` before the plugin makes
 additional changes, make sure to use the method with an async/await or a Promise.
 
-***
+---
 
 ### setCurrentPageAsync()
 
@@ -3429,7 +3465,7 @@ Switch the active page to the specified [PageNode](PageNode.md).
 
 `Promise`\<`void`\>
 
-***
+---
 
 ### setFileThumbnailNodeAsync()
 
@@ -3449,7 +3485,7 @@ Set `node` to be the thumbnail for the file. If `node` is null, then use the def
 
 `Promise`\<`void`\>
 
-***
+---
 
 ### setSlideGrid()
 
@@ -3477,17 +3513,17 @@ Using this method you can manipulate and reorder the grid.
 For example:
 
 ```ts
-const grid = figma.getSlideGrid()
-const [firstRow, ...rest] = grid
+const grid = figma.getSlideGrid();
+const [firstRow, ...rest] = grid;
 
 // move the first row to the end
-figma.setSlideGrid([...rest, firstRow])
+figma.setSlideGrid([...rest, firstRow]);
 ```
 
 So long as all the Slides in the current grid are passed back to `setSlideGrid` the update will succeed.
 Meaning, you can change the amount of rows as you please - flatten all to one row, explode to many rows, etc, and the method will handle all updates for you.
 
-***
+---
 
 ### showUI()
 
@@ -3510,6 +3546,7 @@ The HTML to insert into the iframe. You can pass in the HTML code as a string he
 [`ShowUIOptions`](ShowUIOptions.md)
 
 An object that may contain the following optional parameters:
+
 - `visible`: Whether the UI starts out displayed to the user. Defaults to `true`. You can use `figma.ui.show()` and `figma.ui.hide()` to change the visibility later.
 - `width`: The width of the UI. Defaults to 300. Minimum is 70. Can be changed later using `figma.ui.resize(width, height)`
 - `height`: The height of the UI. Defaults to 200. Minimum is 0. Can be changed later using `figma.ui.resize(width, height)`
@@ -3532,20 +3569,23 @@ If the `<iframe>` UI is already showing when this function is called, the previo
 ## Usage Examples
 
 ```js title="Example usage"
-figma.showUI(
-  "<b>Hello from Figma</b>",
-  { width: 400, height: 200, title: "My title" }
-)
+figma.showUI("<b>Hello from Figma</b>", {
+  width: 400,
+  height: 200,
+  title: "My title",
+});
 
-figma.showUI(
-  "<b>Hello from Figma</b>",
-  { width: 400, height: 200, title: "My title", position: { x: 100, y: 100 } }
-)
+figma.showUI("<b>Hello from Figma</b>", {
+  width: 400,
+  height: 200,
+  title: "My title",
+  position: { x: 100, y: 100 },
+});
 
-figma.showUI(__html__)
+figma.showUI(__html__);
 ```
 
-***
+---
 
 ### subtract()
 
@@ -3573,7 +3613,7 @@ readonly [`BaseNode`](../type-aliases/BaseNode.md)[]
 
 [`BooleanOperationNode`](BooleanOperationNode.md)
 
-***
+---
 
 ### triggerUndo()
 
@@ -3587,7 +3627,7 @@ Triggers an undo action. Reverts to the last `commitUndo()` state.
 
 `void`
 
-***
+---
 
 ### ungroup()
 
@@ -3615,7 +3655,7 @@ This API is roughly the equivalent of pressing Ctrl-Shift-G/⌘⇧G in the edito
 
 If the ungrouped node is part of the current selection, the ungrouped node's children will become part of the selection. Otherwise the selection is unchanged.
 
-***
+---
 
 ### union()
 

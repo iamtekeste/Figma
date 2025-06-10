@@ -1,6 +1,3 @@
-
-
----
 ## Interfaces
 
 - [ActiveUser](interfaces/ActiveUser.md)
